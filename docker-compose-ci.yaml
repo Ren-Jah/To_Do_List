@@ -25,6 +25,8 @@ services:
         condition: service_completed_successfully
     ports:
       - "8000:8000"
+    volumes:
+      - ./.docker_env:/todolist/.env
 
   migrations:
     image: renj4h/todolist:$GITHUB_REF_NAME-$GITHUB_RUN_ID
@@ -37,6 +39,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    volumes:
+      - ./.docker_env:/todolist/.env
     command: >
       sh -c "python3 manage.py migrate"
 
@@ -59,6 +63,3 @@ services:
       interval: 3s
       timeout: 3s
       retries: 3
-
-volumes:
-  pg_data:
