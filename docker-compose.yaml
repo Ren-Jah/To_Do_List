@@ -15,6 +15,8 @@ services:
       dockerfile: Dockerfile
     image: renj4h/todolist:latest
     restart: always
+    env_file:
+      - .env
     depends_on:
       db:
         condition: service_healthy
@@ -22,8 +24,6 @@ services:
         condition: service_completed_successfully
     ports:
       - "8000:8000"
-    volumes:
-      - ./.docker_env:/todolist/.env
 
   migrations:
     build: .
@@ -31,8 +31,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    volumes:
-      - ./.docker_env:/todolist/.env
+    env_file:
+      - .env
     command: >
       sh -c "python3 manage.py migrate"
 
@@ -44,6 +44,8 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
       SECRET_KEY: ${SECRET_KEY}
+    env_file:
+      -  .env
     ports:
       - "5435:5432"
     volumes:
@@ -53,7 +55,6 @@ services:
       interval: 3s
       timeout: 3s
       retries: 3
-
 
 volumes:
   pg_data:
