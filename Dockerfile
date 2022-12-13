@@ -1,11 +1,11 @@
 FROM python:3.10-slim
 
-WORKDIR todolist
+WORKDIR /todolist
 
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
-COPY todolist/ .
+COPY . .
 
 EXPOSE 8000
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
