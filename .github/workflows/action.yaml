@@ -28,7 +28,7 @@ jobs:
           cat docker-compose-ci.yaml | envsubst > deploy/docker-compose.yaml
       - name: check copy files
         run: |
-          ps -ls
+          ls -la
       - name: copy files to server
         uses: appleboy/scp-action@master
         with:
