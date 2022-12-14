@@ -23,6 +23,9 @@ jobs:
     steps:
       - name: clone code
         uses: actions/checkout@v2
+      -name list files
+        run: |
+          ls -la
       - name: render config
         run: |
           mkdir deploy

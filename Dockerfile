@@ -1,6 +1,6 @@
 FROM python:3.10-slim
 
-WORKDIR todolist
+WORKDIR /todolist
 
 COPY requirements.txt .
 RUN pip install -r requirements.txt
