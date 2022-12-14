@@ -23,13 +23,13 @@ jobs:
     steps:
       - name: clone code
         uses: actions/checkout@v2
-      - name: list files
-        run: |
-          ls -la
       - name: render config
         run: |
           mkdir deploy
           cat docker-compose-ci.yaml | envsubst > deploy/docker-compose.yaml
+      - name: list files
+          run: |
+            ls -la
       - name: copy files to server
         uses: appleboy/scp-action@master
         with:

@@ -33,11 +33,10 @@ services:
         condition: service_healthy
     volumes:
       - ./.docker_env:/todolist/.env
-    command: >
-      sh -c "python3 manage.py migrate"
+    command: python manage.py migrate
 
   db:
-    image: postgres:latest
+    image: postgres:14.6-alpine
     restart: always
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
@@ -47,7 +46,7 @@ services:
     ports:
       - "5435:5432"
     volumes:
-      - ./pg_data:/var/lib/postgresql/data
+      - pg_data:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
       interval: 3s
