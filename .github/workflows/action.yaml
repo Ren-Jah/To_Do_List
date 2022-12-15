@@ -25,7 +25,7 @@ jobs:
       - name: render config
         run: |
           mkdir deploy_folder
-          cat docker-compose-ci.yaml | envsubst > deploy/docker-compose.yaml
+          cat docker-compose-ci.yaml | envsubst > deploy_folder/docker-compose.yaml
           cat .env | envsubst > deploy_folder/.env
       - name: check copy files
         run: |
