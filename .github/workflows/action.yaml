@@ -16,7 +16,6 @@ jobs:
     needs: build_and_push
     runs-on: ubuntu-latest
     env:
-      DEBUG: ${DEBUG}
       POSTGRES_HOST: ${POSTGRES_HOST}
       POSTGRES_USER: ${{ secrets.POSTGRES_USER}}
       POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD}}
