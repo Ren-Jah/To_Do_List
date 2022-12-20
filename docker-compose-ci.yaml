@@ -13,7 +13,6 @@ services:
     image: renj4h/todolist:$GITHUB_REF_NAME-$GITHUB_RUN_ID
     restart: always
     environment:
-      DEBUG: ${DEBUG}
       POSTGRES_HOST: ${POSTGRES_HOST}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
