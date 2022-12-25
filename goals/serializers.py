@@ -1,4 +1,6 @@
 from rest_framework import serializers
+
+from core.serializers import UserSerializer
 from goals.models import Goal, GoalCategory, GoalComment
 
 
@@ -37,6 +39,7 @@ class GoalCreateSerializer(serializers.ModelSerializer):
 
         return value
 
+
 class GoalSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
 
@@ -46,7 +49,6 @@ class GoalSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
     def validate_category(self, value):
-
         if value.user != self.context["request"].user:
             raise serializers.ValidationError("not owner of category")
 
