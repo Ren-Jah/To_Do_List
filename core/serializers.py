@@ -21,7 +21,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
         try:
             password_validation.validate_password(password)
         except Exception as e:
-            raise serializers.ValidationError(e)
+            raise serializers.ValidationError({'password': e.args[0]})
 
         hashed_password = make_password(password)
         validated_data['password'] = hashed_password
