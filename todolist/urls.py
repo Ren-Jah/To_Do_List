@@ -20,6 +20,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('core/', include('core.urls')),
     path('api/core/', include('core.urls')),
-    path('goals/', include('goals.urls')),
+    path('api/goals/', include('goals.urls')),
     path('oauth/', include("social_django.urls", namespace="social")),
 ]
