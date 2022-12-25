@@ -72,7 +72,7 @@ class UpdatePasswordSerializer(serializers.ModelSerializer):
     class Meta:
         model = USER_MODEL
         read_only_fields = ("id",)
-        fields = ("old_password", "new_password")
+        fields = ("user", "old_password", "new_password")
 
     def validate(self, attrs):
         user = attrs['user']
