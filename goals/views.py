@@ -1,5 +1,5 @@
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework.generics import CreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework import permissions, filters
 from rest_framework.pagination import LimitOffsetPagination
 
@@ -15,7 +15,7 @@ class GoalCategoryCreateView(CreateAPIView):
     serializer_class = GoalCategoryCreateSerializer
 
 
-class GoalCategoryListView(CreateAPIView):
+class GoalCategoryListView(ListAPIView):
     model = GoalCategory
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = GoalCategorySerializer
@@ -58,7 +58,7 @@ class GoalCreateView(CreateAPIView):
     serializer_class = GoalCreateSerializer
 
 
-class GoalListView(CreateAPIView):
+class GoalListView(ListAPIView):
     model = Goal
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = GoalSerializer
@@ -99,7 +99,7 @@ class GoalCommentCreateView(CreateAPIView):
     serializer_class = GoalCommentCreateSerializer
 
 
-class GoalCommentListView(CreateAPIView):
+class GoalCommentListView(ListAPIView):
     model = GoalComment
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = GoalCommentSerializer
