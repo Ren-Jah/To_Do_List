@@ -21,8 +21,6 @@ services:
         condition: service_healthy
       migrations:
         condition: service_completed_successfully
-    ports:
-      - "8000:8000"
     volumes:
       - ./.docker_env:/todolist/.env
 
@@ -48,8 +46,6 @@ services:
       POSTGRES_DB: ${POSTGRES_DB}
     env_file:
       - .env
-    ports:
-      - "5432:5432"
     volumes:
       - pg_data:/var/lib/postgresql/data
     healthcheck:
