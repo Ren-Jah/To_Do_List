@@ -35,14 +35,14 @@ class Goal(models.Model):
         critical = 4, "Критический"
 
     title = models.CharField(verbose_name="Название", max_length=255)
-    description = models.TextField(verbose_name="Описание")
+    description = models.TextField(verbose_name="Описание", null=True, blank=True, default=None)
     status = models.PositiveSmallIntegerField(
         verbose_name="Статус", choices=Status.choices, default=Status.to_do
     )
     priority = models.PositiveSmallIntegerField(
         verbose_name="Приоритет", choices=Priority.choices, default=Priority.medium
     )
-    due_date = models.DateField(verbose_name="Дата выполнения")
+    due_date = models.DateField(verbose_name="Дата выполнения", null=True, blank=True, default=None)
     user = models.ForeignKey('core.User', verbose_name="Автор", on_delete=models.PROTECT)
     category = models.ForeignKey(GoalCategory, verbose_name='Категория', related_name='goals', on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
