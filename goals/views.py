@@ -134,7 +134,7 @@ class BoardCreateView(CreateAPIView):
 
 class BoardListView(ListAPIView):
     model = Board
-    permission_classes = [permissions.IsAuthenticated, BoardPermissions]
+    permission_classes = [permissions.IsAuthenticated]
     serializer_class = BoardListSerializer
     filter_backends = [
         filters.OrderingFilter,
@@ -154,8 +154,6 @@ class BoardView(RetrieveUpdateDestroyAPIView):
         return Board.objects.filter(participants__user=self.request.user, is_deleted=False)
 
     def perform_destroy(self, instance: Board):
-        # При удалении доски помечаем ее как is_deleted,
-        # «удаляем» категории, обновляем статус целей
         with transaction.atomic():
             instance.is_deleted = True
             instance.save()
