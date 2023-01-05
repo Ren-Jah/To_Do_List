@@ -134,7 +134,7 @@ class BoardCreateView(CreateAPIView):
 
 class BoardListView(ListAPIView):
     model = Board
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated, BoardPermissions]
     serializer_class = BoardListSerializer
     filter_backends = [
         filters.OrderingFilter,
