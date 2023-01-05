@@ -1,14 +1,58 @@
 from django.db import models
 from django.utils import timezone
 
-from core.models import User
+
+# Board
+class Board(models.Model):
+    class Meta:
+        verbose_name = "Доска"
+        verbose_name_plural = "Доски"
+
+    title = models.CharField(verbose_name="Название", max_length=255)
+    is_deleted = models.BooleanField(verbose_name="Удалена", default=False)
+    created = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
+    updated = models.DateTimeField(auto_now=True, verbose_name="Дата последнего обновления")
 
 
+class BoardParticipant(models.Model):
+    class Meta:
+        unique_together = ("board", "user")
+        verbose_name = "Участник"
+        verbose_name_plural = "Участники"
+
+    class Role(models.IntegerChoices):
+        owner = 1, "Владелец"
+        writer = 2, "Редактор"
+        reader = 3, "Читатель"
+
+    board = models.ForeignKey(
+        Board,
+        verbose_name="Доска",
+        on_delete=models.PROTECT,
+        related_name="participants",
+    )
+    user = models.ForeignKey(
+        'core.User',
+        verbose_name="Пользователь",
+        on_delete=models.PROTECT,
+        related_name="participants",
+    )
+    role = models.PositiveSmallIntegerField(
+        verbose_name="Роль", choices=Role.choices, default=Role.owner
+    )
+    created = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
+    updated = models.DateTimeField(auto_now=True, verbose_name="Дата последнего обновления")
+
+
+# Goal
 class GoalCategory(models.Model):
     class Meta:
         verbose_name = "Категория"
         verbose_name_plural = "Категории"
 
+    board = models.ForeignKey(
+        Board, verbose_name="Доска", on_delete=models.PROTECT, related_name="categories"
+    )
     title = models.CharField(verbose_name="Название", max_length=255)
     user = models.ForeignKey('core.User', verbose_name="Автор", on_delete=models.PROTECT)
     is_deleted = models.BooleanField(verbose_name="Удалена", default=False)
@@ -60,3 +104,5 @@ class GoalComment(models.Model):
     goal = models.ForeignKey(Goal, verbose_name='Цель', related_name='comments', on_delete=models.PROTECT)
     created = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
     updated = models.DateTimeField(auto_now=True, verbose_name="Дата последнего обновления")
+
+

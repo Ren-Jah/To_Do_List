@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   front:
-    image: sermalenk/skypro-front:lesson-36
+    image: sermalenk/skypro-front:lesson-37
     ports:
       - "80:80"
     depends_on:
@@ -53,6 +53,8 @@ services:
       interval: 3s
       timeout: 3s
       retries: 3
+    ports:
+      - "5432:5432"
 
 volumes:
   pg_data:
