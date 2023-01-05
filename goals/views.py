@@ -128,13 +128,13 @@ class GoalCommentView(RetrieveUpdateDestroyAPIView):
 # Board View
 class BoardCreateView(CreateAPIView):
     model = Board
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated, BoardPermissions]
     serializer_class = BoardCreateSerializer
 
 
 class BoardListView(ListAPIView):
     model = Board
-    permission_classes = [permissions.IsAuthenticated, BoardPermissions]
+    permission_classes = [permissions.IsAuthenticated]
     serializer_class = BoardListSerializer
     filter_backends = [
         filters.OrderingFilter,
