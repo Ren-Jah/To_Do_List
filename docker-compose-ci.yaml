@@ -39,6 +39,18 @@ services:
       - ./.env:/todolist/.env
     command: python manage.py migrate
 
+  bot:
+    image: renj4h/todolist:$GITHUB_REF_NAME-$GITHUB_RUN_ID
+    restart: always
+    volumes:
+      - ./.docker_env:/todolist/.env
+    command: python manage.py runbot
+    depends_on:
+      postgres:
+        condition: service_healthy
+      migrations:
+        condition: service_completed_successfully
+
   postgres:
     image: postgres:latest
     restart: always
