@@ -1,5 +1,5 @@
 from dataclasses import field
-import marshmallow_dataclass
+from marshmallow_dataclass import class_schema
 from marshmallow_dataclass import dataclass
 from marshmallow import EXCLUDE
 from typing import List
@@ -69,5 +69,5 @@ class SendMessageResponse:
         unknown = EXCLUDE
 
 
-GET_UPDATES_SCHEMA = marshmallow_dataclass.class_schema(GetUpdatesResponse)()
-SEND_MESSAGE_RESPONSE_SCHEMA = marshmallow_dataclass.class_schema(SendMessageResponse)()
+GET_UPDATES_SCHEMA = class_schema(GetUpdatesResponse)()
+SEND_MESSAGE_RESPONSE_SCHEMA = class_schema(SendMessageResponse)()
