@@ -107,7 +107,7 @@ class Command(BaseCommand):
         elif msg.text == '/create':
             self.choose_category(msg, tg_user)
         elif msg.text == '/cancel':
-            self.cancel_operation(msg, tg_user)
+            self.cancel_operation(msg)
         elif STATE.state == TgState.CATEGORY_CHOOSE:
             self.check_category(msg)
         elif STATE.state == TgState.GOAL_CREATE:
@@ -116,7 +116,7 @@ class Command(BaseCommand):
         else:
             self.tg_client.send_message(
                 chat_id=msg.chat.id,
-                text=f'Неизвестная команжа {msg.text}'
+                text=f'Неизвестная команда {msg.text}'
             )
 
     def handle(self, *args, **options):
