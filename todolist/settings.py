@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'goals',
     'bot',
     'social_django',
+    'drf_spectacular',
 
 ]
 
@@ -71,7 +72,15 @@ TEMPLATES = [
 WSGI_APPLICATION = 'todolist.wsgi.application'
 
 REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination'
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+# SPECTACULAR
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'ToDoList API',
+    'DESCRIPTION': 'ToDoList project',
+    'VERSION': '1.0.0',
 }
 
 # Database
