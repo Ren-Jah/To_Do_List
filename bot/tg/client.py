@@ -4,6 +4,7 @@ from bot.tg.dc import GetUpdatesResponse, SendMessageResponse, GET_UPDATES_SCHEM
 
 
 class TgClient:
+    """ Класс телеграмм-клиента для обращения в Telegram API """
     def __init__(self, token):
         self.token = token
 

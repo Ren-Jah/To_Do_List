@@ -8,11 +8,13 @@ USER_MODEL = get_user_model()
 
 
 class RegistrationView(generics.CreateAPIView):
+    """ Вьюшка регистрации новых пользователей """
     model = USER_MODEL
     serializer_class = RegistrationSerializer
 
 
 class LoginView(generics.GenericAPIView):
+    """ Вьюшка для входа пользователя в аккаунт"""
     serializer_class = LoginSerializer
 
     def post(self, request, *args, **kwargs):
@@ -25,19 +27,23 @@ class LoginView(generics.GenericAPIView):
 
 
 class ProfileView(RetrieveUpdateDestroyAPIView):
+    """ Вьюшка для профиля пользователя """
     serializer_class = ProfileSerializer
     queryset = USER_MODEL.objects.all()
     permission_classes = [permissions.IsAuthenticated]
 
     def get_object(self):
+        """ Метод для возвращения текущего пользователя """
         return self.request.user
 
     def delete(self, request, *args, **kwargs):
+        """ Метод для выхода их аккаунта """
         logout(request)
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class UpdatePasswordView(UpdateAPIView):
+    """ Вьюшка для обновления пароля """
     model = USER_MODEL
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = UpdatePasswordSerializer

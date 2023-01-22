@@ -8,6 +8,7 @@ from goals.models import Goal, GoalCategory
 
 
 class TgState:
+    """ Кдасс для отслеживания этапов создания целей """
     DEFAULT = 0
     CATEGORY_CHOOSE = 1
     GOAL_CREATE = 2
@@ -17,9 +18,11 @@ class TgState:
         self.category_id = category_id
 
     def set_state(self, state):
+        """ Метод задающий этап создания цели """
         self.state = state
 
     def set_category_id(self, category_id):
+        """ Метод присваения категории для цели """
         self.category_id = category_id
 
 
@@ -27,10 +30,12 @@ STATE = TgState(state=TgState.DEFAULT)
 
 
 class Command(BaseCommand):
+    """ Класс управления командами для телеграмм-бота """
     help = 'Runs telegramm bot'
     tg_client = TgClient("5987351996:AAHn5lnwAgMi2uooEYKuzMD3pii-F6CYCAE")
 
     def choose_category(self, msg: Message, tg_user: TgUser):
+        """ Метод для выбора категории """
         goal_categories = GoalCategory.objects.filter(
             board__participants__user=tg_user.user,
             is_deleted=False,
@@ -44,6 +49,7 @@ class Command(BaseCommand):
         STATE.set_state(TgState.CATEGORY_CHOOSE)
 
     def check_category(self, msg: Message):
+        """ Метод для проверки наличия имеющихся категорий """
         category = GoalCategory.objects.filter(title=msg.text).first()
         if category:
             self.tg_client.send_message(
@@ -59,6 +65,7 @@ class Command(BaseCommand):
             )
 
     def create_goal(self,  msg: Message, tg_user: TgUser):
+        """ Метод создания цели """
         category = GoalCategory.objects.get(pk=STATE.category_id)
         goal = Goal.objects.create(
             title=msg.text,
@@ -73,6 +80,7 @@ class Command(BaseCommand):
         STATE.set_state(TgState.DEFAULT)
 
     def get_goals(self, msg: Message, tg_user: TgUser):
+        """ Метод для выведения имеющихся целей """
         goals = Goal.objects.filter(
             category__board__participants__user=tg_user.user,
         ).exclude(status=Goal.Status.archived)
@@ -84,6 +92,7 @@ class Command(BaseCommand):
         )
 
     def cancel_operation(self, msg: Message):
+        """ Метод отмены текущего действия """
         STATE.set_state(TgState.DEFAULT)
         self.tg_client.send_message(
             chat_id=msg.chat.id,
@@ -91,6 +100,7 @@ class Command(BaseCommand):
         )
 
     def handle_message(self, msg: Message):
+        """ Метод для обработки получаемых сообщений """
         tg_user, created = TgUser.objects.get_or_create(
             tg_user_id=msg.msg_from.id,
             tg_chat_id=msg.chat.id,
@@ -120,6 +130,7 @@ class Command(BaseCommand):
             )
 
     def handle(self, *args, **options):
+        """ Метод для получения актуальной информации от телеграмм-бота"""
         offset = 0
         while True:
             res = self.tg_client.get_updates(offset=offset)

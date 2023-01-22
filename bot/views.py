@@ -9,12 +9,14 @@ from bot.tg.client import TgClient
 
 
 class BotVerifyView(GenericAPIView):
+    """ Вьюшка для привязки телеграмм-бота"""
     model = TgUser
     permission_classes = [IsAuthenticated]
     http_method_names = ['patch']
     serializer_class = TgUserSerializer
 
     def patch(self, request, *args, **kwargs):
+        """ Метод для привязки телеграмм-бота"""
         data = self.serializer_class(request.data).data
         tg_client = TgClient("5987351996:AAHn5lnwAgMi2uooEYKuzMD3pii-F6CYCAE")
         tg_user = TgUser.objects.first(verification_code=data['verification_code']).first

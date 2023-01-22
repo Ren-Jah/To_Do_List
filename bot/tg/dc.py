@@ -4,6 +4,8 @@ from marshmallow_dataclass import dataclass
 from marshmallow import EXCLUDE
 from typing import List
 
+""" dataclass описивающие ответы Telegram API"""
+
 
 @dataclass
 class MessageFrom:

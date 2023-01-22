@@ -8,10 +8,12 @@ USER_MODEL = get_user_model()
 
 
 class RegistrationSerializer(serializers.ModelSerializer):
+    """ Сериализатор для регистрации новых пользователей """
     password = serializers.CharField(write_only=True)
     password_repeat = serializers.CharField(write_only=True)
 
     def create(self, validated_data) -> USER_MODEL:
+        """ Метод для создания нового пользователя """
         password = validated_data.get('password')
         password_repeat = validated_data.pop('password_repeat')
 
@@ -34,6 +36,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
 
 
 class LoginSerializer(serializers.ModelSerializer):
+    """ Сериализатор входа пользователя в аккаунт"""
     username = serializers.CharField(required=True, write_only=True)
     password = serializers.CharField(required=True, write_only=True)
 
@@ -42,6 +45,7 @@ class LoginSerializer(serializers.ModelSerializer):
         fields = ['username', 'password']
 
     def validate(self, attrs: dict):
+        """ Метод валидации передаваемых от пользователя данных """
         username = attrs.get("username")
         password = attrs.get("password")
         user = authenticate(username=username, password=password)
@@ -53,6 +57,7 @@ class LoginSerializer(serializers.ModelSerializer):
 
 
 class ProfileSerializer(serializers.ModelSerializer):
+    """ Сериализатор для профиля пользователя """
     class Meta:
         model = USER_MODEL
         fields = [
@@ -65,6 +70,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 
 class UpdatePasswordSerializer(serializers.ModelSerializer):
+    """ Сериализатор для обновления пароля пользователя """
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
     old_password = serializers.CharField(write_only=True)
     new_password = serializers.CharField(write_only=True, validators=[validate_password])
@@ -75,18 +81,21 @@ class UpdatePasswordSerializer(serializers.ModelSerializer):
         fields = ("user", "old_password", "new_password")
 
     def validate(self, attrs):
+        """ Метод сверки текущего и вводимого паролей """
         user = attrs['user']
         if not user.check_password(attrs['old_password']):
             raise ValidationError({"old_password": "неверный пароль"})
         return attrs
 
     def update(self, instance: USER_MODEL, validated_data):
+        """ Метод для обновления старого на новый """
         instance.set_password(validated_data["new_password"])
         instance.save(update_fields=["password"])
         return instance
 
 
 class UserSerializer(serializers.ModelSerializer):
+    """ Сериализатор для данных пользователя """
     class Meta:
         model = USER_MODEL
         fields = [

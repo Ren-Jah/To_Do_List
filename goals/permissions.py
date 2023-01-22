@@ -4,6 +4,7 @@ from goals.models import BoardParticipant
 
 
 class BoardPermissions(permissions.BasePermission):
+    """ Класс для проверки и предоставления доступа к доскам """
     def has_object_permission(self, request, view, obj):
         if not request.user.is_authenticated:
             return False
@@ -20,6 +21,7 @@ class BoardPermissions(permissions.BasePermission):
 
 
 class GoalCategoryPermissions(permissions.BasePermission):
+    """ Класс для проверки и предоставления доступа к категориям целей """
     def has_object_permission(self, request, view, category):
         if not request.user.is_authenticated:
             return False
@@ -39,6 +41,7 @@ class GoalCategoryPermissions(permissions.BasePermission):
 
 
 class GoalPermissions(permissions.BasePermission):
+    """ Класс для проверки и предоставления доступа к целям """
     def has_object_permission(self, request, view, goal):
         if not request.user.is_authenticated:
             return False
@@ -58,6 +61,7 @@ class GoalPermissions(permissions.BasePermission):
 
 
 class CommentPermissions(permissions.BasePermission):
+    """ Класс для проверки и предоставления доступа к комментариям """
     def has_object_permission(self, request, view, comment):
         if not request.user.is_authenticated:
             return False

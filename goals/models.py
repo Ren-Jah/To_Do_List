@@ -4,6 +4,14 @@ from django.utils import timezone
 
 # Board
 class Board(models.Model):
+    """
+    Модель класса  Board
+    ------
+    title : str
+    is_deleted : bool
+    created : str
+    updated : str
+    """
     class Meta:
         verbose_name = "Доска"
         verbose_name_plural = "Доски"
@@ -15,12 +23,22 @@ class Board(models.Model):
 
 
 class BoardParticipant(models.Model):
+    """
+    Модель класса  BoardParticipant
+    ------
+    board : int
+    user : int
+    role : int
+    created : str
+    updated : str
+    """
     class Meta:
         unique_together = ("board", "user")
         verbose_name = "Участник"
         verbose_name_plural = "Участники"
 
     class Role(models.IntegerChoices):
+        """ Класс для присвоения ролей участникам досок """
         owner = 1, "Владелец"
         writer = 2, "Редактор"
         reader = 3, "Читатель"
@@ -49,6 +67,16 @@ class BoardParticipant(models.Model):
 
 # Goal
 class GoalCategory(models.Model):
+    """
+    Модель класса  GoalCategory
+    ------
+    board : int
+    title : str
+    user : int
+    is_deleted : bool
+    created : str
+    updated : str
+    """
     class Meta:
         verbose_name = "Категория"
         verbose_name_plural = "Категории"
@@ -64,18 +92,32 @@ class GoalCategory(models.Model):
 
 
 class Goal(models.Model):
-
+    """
+    Модель класса  Goal
+    ------
+    title : str
+    description : int
+    status : int
+    priority : int
+    due_date : str
+    user : int
+    category : int
+    created : str
+    updated : str
+    """
     class Meta:
         verbose_name = "Цель"
         verbose_name_plural = "Цели"
 
     class Status(models.IntegerChoices):
+        """ Класс для присвоения статусу цели """
         to_do = 1, "К выполнению"
         in_progress = 2, "В процессе"
         done = 3, "Выполнено"
         archived = 4, "Архив"
 
     class Priority(models.IntegerChoices):
+        """ Класс для присвоения приоритета цели """
         low = 1, "Низкий"
         medium = 2, "Средний"
         high = 3, "Высокий"
@@ -97,7 +139,15 @@ class Goal(models.Model):
 
 
 class GoalComment(models.Model):
-
+    """
+    Модель класса GoalComment
+    ------
+    text : str
+    user : int
+    goal : int
+    created : str
+    updated : str
+    """
     class Meta:
         verbose_name = "Комментарий"
         verbose_name_plural = "Комментарии"
