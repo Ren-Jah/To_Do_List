@@ -1,14 +1,14 @@
-#### To Do List 
-## Приложение-календарь для создания и остлеживания задач разной степени важности.
-### Запуск приложения
+#To Do List 
+### Приложение-календарь для создания и остлеживания задач разной степени важности.
+## Запуск приложения
 1. Клонируем репозиторий:
-git clone https://github.com/Ren-Jah/To_Do_List
+    git clone https://github.com/Ren-Jah/To_Do_List
 2. Создаем виртуальное окружение
 3. Устанавливаем переменные среды в .env file
-Создаем .env файл в папке todolist(пример переменных приведен в .env.example)
+    Создаем .env файл в папке todolist(пример переменных приведен в .env.example)
 4. Устанавливаем зависимости:
-pip install -r requirements.txt
+    pip install -r requirements.txt
 5. Запускаем приложение
-python manage.py runserver
+    python manage.py runserver
 
 
