@@ -22,7 +22,7 @@ class GoalCategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = GoalCategory
-        read_only_fields = ("id", "created", "updated", "user")
+        read_only_fields = ("id", "created", "updated", "user", "board")
         fields = "__all__"
 
 
@@ -124,7 +124,7 @@ class BoardSerializer(serializers.ModelSerializer):
         read_only_fields = ("id", "created", "updated")
 
     def update(self, instance, validated_data):
-        owner = validated_data.pop("user")
+        owner = validated_data.pop("user", self.context["request"].user)
         new_participants = validated_data.pop("participants")
         new_by_id = {part["user"].id: part for part in new_participants}
 
