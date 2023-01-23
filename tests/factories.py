@@ -55,5 +55,5 @@ class GoalCommentFactory(factory.django.DjangoModelFactory):
         model = GoalComment
 
     user = factory.SubFactory(UserFactory)
-    category = factory.SubFactory(GoalFactory)
-    title = factory.Faker("sentence", nb_words=10)
+    goal = factory.SubFactory(GoalFactory)
+    text = factory.Faker("sentence", nb_words=10)
